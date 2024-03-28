@@ -32,6 +32,10 @@ io.on("connection", (socket) => {
 		socket.broadcast.emit('callAgains',data)
 	})
 
+	socket.on('muteRing',(data)=>{
+		socket.broadcast.emit('muteRingCall',data)
+	})
+
 
 	socket.on("disconnect", () => {
 		socket.broadcast.emit("callEnded")
