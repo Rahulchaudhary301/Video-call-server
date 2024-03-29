@@ -13,6 +13,9 @@ const io = require("socket.io")(server, {
 })
 
 io.on("connection", (socket) => {
+
+	socket.broadcast.emit('usrToCall',socket.id)
+
 	socket.emit("me", socket.id)
 
 	socket.on('callStatuss',(data)=>{
@@ -39,6 +42,10 @@ io.on("connection", (socket) => {
 
 	socket.on("disconnect", () => {
 		socket.broadcast.emit("callEnded")
+
+		socket.broadcast.emit('usserRemove',socket.id);
+
+	  
 	})
 
 	socket.on("callUser", (data) => {
