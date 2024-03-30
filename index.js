@@ -12,9 +12,11 @@ const io = require("socket.io")(server, {
 	}
 })
 
+
+
 io.on("connection", (socket) => {
 
-	socket.broadcast.emit('usrToCall',socket.id)
+	socket.broadcast.emit('usrToCall',{id:socket.id})
 
 	socket.emit("me", socket.id)
 
