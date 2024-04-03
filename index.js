@@ -25,13 +25,20 @@ io.on("connection", (socket) => {
 	})
 
 
-	socket.on('bothEnd',(data)=>{
-		socket.broadcast.emit('cutCallBoth',data)
+	socket.on('bothEnd',({msg,id})=>{
+
+
+		io.to(id).emit('cutCallBoth',msg)
 	})
 
-	socket.on('misedcall',(data)=>{
-		socket.broadcast.emit('missed',data)
+
+
+
+	socket.on('misedcall',({msg,id})=>{
+		
+		io.to(id).emit('missed',{msg,id})
 	})
+
 
 	socket.on('callAgain',(data)=>{
 		socket.broadcast.emit('callAgains',data)
@@ -53,6 +60,8 @@ io.on("connection", (socket) => {
 	socket.on("callUser", (data) => {
 		io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
 	})
+
+   
 
 	socket.on("answerCall", (data) => {
 		io.to(data.to).emit("callAccepted", data.signal)
